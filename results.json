@@ -1,0 +1,246 @@
+{
+  "dot_products": [
+    {
+      "pair": "same direction",
+      "u": [
+        2.0,
+        1.0
+      ],
+      "v": [
+        4.0,
+        2.0
+      ],
+      "dot": 10.0,
+      "cosine": 1.0
+    },
+    {
+      "pair": "perpendicular",
+      "u": [
+        2.0,
+        1.0
+      ],
+      "v": [
+        -1.0,
+        2.0
+      ],
+      "dot": 0.0,
+      "cosine": 0.0
+    },
+    {
+      "pair": "opposite",
+      "u": [
+        2.0,
+        1.0
+      ],
+      "v": [
+        -2.0,
+        -1.0
+      ],
+      "dot": -5.0,
+      "cosine": -1.0
+    },
+    {
+      "pair": "45\u00b0 apart",
+      "u": [
+        1.0,
+        0.0
+      ],
+      "v": [
+        1.0,
+        1.0
+      ],
+      "dot": 1.0,
+      "cosine": 0.7071
+    }
+  ],
+  "matmul_benchmark": [
+    {
+      "n": 16,
+      "loops_ms": 0.1891879999931234,
+      "numpy_ms": 0.0010650000064060805,
+      "speedup": 177.64131347900363,
+      "max_abs_err": 1.7763568394002505e-15
+    },
+    {
+      "n": 32,
+      "loops_ms": 1.4364919999962922,
+      "numpy_ms": 0.002046999995286569,
+      "speedup": 701.7547646819564,
+      "max_abs_err": 5.329070518200751e-15
+    },
+    {
+      "n": 64,
+      "loops_ms": 13.37533000000235,
+      "numpy_ms": 0.009727000005455011,
+      "speedup": 1375.0724778967117,
+      "max_abs_err": 8.881784197001252e-15
+    },
+    {
+      "n": 128,
+      "loops_ms": 95.89438300000097,
+      "numpy_ms": 0.04738100000167833,
+      "speedup": 2023.8995166122327,
+      "max_abs_err": 1.7763568394002505e-14
+    },
+    {
+      "n": 200,
+      "loops_ms": 505.1510730000075,
+      "numpy_ms": 0.11052100001052167,
+      "speedup": 4570.63429530964,
+      "max_abs_err": 2.842170943040401e-14
+    }
+  ],
+  "shape_rules": [
+    {
+      "case": "vector \u00b7 vector",
+      "expr": "(C)\u00b7(C)",
+      "result": "()"
+    },
+    {
+      "case": "matrix @ vector",
+      "expr": "(H,C)@(C)",
+      "result": "(16,)"
+    },
+    {
+      "case": "matrix @ matrix",
+      "expr": "(T,C)@(C,H)",
+      "result": "(8, 16)"
+    },
+    {
+      "case": "batched: (B,T,C) @ (C,H)",
+      "expr": "(B,T,C)@(C,H)",
+      "result": "(4, 8, 16)"
+    },
+    {
+      "case": "linear layer nn.Linear(C,H)",
+      "expr": "Linear(C\u2192H) on (B,T,C)",
+      "result": "(4, 8, 16)"
+    },
+    {
+      "case": "transpose last two dims",
+      "expr": "(B,T,C).T",
+      "result": "(4, 32, 8)"
+    },
+    {
+      "case": "broadcast add bias",
+      "expr": "(B,T,C)+(C)",
+      "result": "(4, 8, 32)"
+    },
+    {
+      "case": "logits over vocab",
+      "expr": "(B,T,C)@(C,V)",
+      "result": "(4, 8, 65)"
+    },
+    {
+      "case": "mismatch \u2192 error",
+      "expr": "(B,T,C)@(H,C)",
+      "result": "error: mm: mat1 and mat2 shapes cannot be multiplied (32x32 and 16x32)"
+    }
+  ],
+  "attention_shapes": [
+    {
+      "step": "x",
+      "meaning": "input embeddings",
+      "shape": "(4, 8, 32)"
+    },
+    {
+      "step": "q = x @ Wq",
+      "meaning": "queries",
+      "shape": "(4, 8, 16)"
+    },
+    {
+      "step": "k = x @ Wk",
+      "meaning": "keys",
+      "shape": "(4, 8, 16)"
+    },
+    {
+      "step": "v = x @ Wv",
+      "meaning": "values",
+      "shape": "(4, 8, 16)"
+    },
+    {
+      "step": "q @ k\u1d40 / \u221aH",
+      "meaning": "every token vs every token",
+      "shape": "(4, 8, 8)"
+    },
+    {
+      "step": "softmax(mask(\u00b7))",
+      "meaning": "attention weights, rows sum to 1",
+      "shape": "(4, 8, 8)"
+    },
+    {
+      "step": "weights @ v",
+      "meaning": "weighted mix of values",
+      "shape": "(4, 8, 16)"
+    }
+  ],
+  "transforms": [
+    {
+      "name": "rotate 45\u00b0",
+      "matrix": [
+        [
+          0.707,
+          -0.707
+        ],
+        [
+          0.707,
+          0.707
+        ]
+      ],
+      "det": 1.0,
+      "rank": 2
+    },
+    {
+      "name": "scale (2, 1.5)",
+      "matrix": [
+        [
+          2.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.5
+        ]
+      ],
+      "det": 3.0,
+      "rank": 2
+    },
+    {
+      "name": "shear",
+      "matrix": [
+        [
+          1.0,
+          1.0
+        ],
+        [
+          0.0,
+          1.0
+        ]
+      ],
+      "det": 1.0,
+      "rank": 2
+    },
+    {
+      "name": "singular (rank 1)",
+      "matrix": [
+        [
+          1.0,
+          2.0
+        ],
+        [
+          0.5,
+          1.0
+        ]
+      ],
+      "det": 0.0,
+      "rank": 1
+    }
+  ],
+  "dims": {
+    "B": 4,
+    "T": 8,
+    "C": 32,
+    "H": 16,
+    "V": 65
+  }
+}
