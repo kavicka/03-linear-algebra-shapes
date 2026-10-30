@@ -97,9 +97,9 @@ A 2×2 matrix tells you where the basis vectors î = (1,0) and ĵ = (0,1) land (
 
 The car's heading is a rotation matrix times `[1, 0]`, the dot product with the track direction says how aligned it is, and every sensor ray hitting a wall is a 2×2 linear system (`det = 0` → parallel). All of it drawn live next to the numbers.
 
-![ch03_vectors](../05-racing-lab/assets/ch03_vectors.gif)
+![ch03_vectors](https://github.com/kavicka/05-racing-lab/raw/main/assets/ch03_vectors.gif)
 
-Full chapter: [Racing Lab · ch. 03](../05-racing-lab/README.md#ch-03--vectors-and-matrices) · code: [`chapters/ch03_vectors.py`](../05-racing-lab/chapters/ch03_vectors.py)
+Full chapter: [Racing Lab · ch. 03](https://github.com/kavicka/05-racing-lab/blob/main/README.md#ch-03--vectors-and-matrices) · code: [`chapters/ch03_vectors.py`](https://github.com/kavicka/05-racing-lab/blob/main/chapters/ch03_vectors.py)
 
 ## What I learned
 - A dot product measures alignment; cosine similarity is the length-free version.

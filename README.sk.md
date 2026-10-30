@@ -97,9 +97,9 @@ Matica 2×2 hovorí, kam sa presunú bázové vektory î = (1,0) a ĵ = (0,1) (s
 
 Smer auta je rotačná matica krát `[1, 0]`, skalárny súčin so smerom trate hovorí, nakoľko je auto zarovnané, a každý lúč senzora, ktorý narazí na stenu, je sústava 2×2 (`det = 0` → rovnobežné). Všetko nakreslené naživo vedľa čísel.
 
-![ch03_vectors](../05-racing-lab/assets/ch03_vectors.gif)
+![ch03_vectors](https://github.com/kavicka/05-racing-lab/raw/main/assets/ch03_vectors.gif)
 
-Celá kapitola: [Racing Lab · kap. 03](../05-racing-lab/README.sk.md#kap-03--vektory-a-matice) · kód: [`chapters/ch03_vectors.py`](../05-racing-lab/chapters/ch03_vectors.py)
+Celá kapitola: [Racing Lab · kap. 03](https://github.com/kavicka/05-racing-lab/blob/main/README.sk.md#kap-03--vektory-a-matice) · kód: [`chapters/ch03_vectors.py`](https://github.com/kavicka/05-racing-lab/blob/main/chapters/ch03_vectors.py)
 
 ## Čo som sa naučil
 - Skalárny súčin meria zarovnanie; kosínusová podobnosť je jeho verzia bez dĺžky.
