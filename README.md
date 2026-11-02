@@ -7,6 +7,13 @@ The linear algebra a transformer actually uses, checked in code: dot product and
 
 ![Batched matmul](assets/batched_matmul.png)
 
+## Start here
+A model does not see words directly. Each token (a word or part of one) is represented by a list of numbers. A **shape** tells us how many such lists we have and how long they are. Here `(4, 8, 32)` means 4 examples with 8 tokens each and 32 numbers per token.
+
+The main question is: **what shape results when we multiply these numbers by a `(32, 16)` matrix?** The answer is `(4, 8, 16)`: still 4 examples and 8 tokens, but now 16 numbers per token. The two inner 32s must match. This is why programs often fail with a shape error.
+
+The script first compares the direction of vector pairs, then writes matrix multiplication with plain loops and compares it with faster NumPy. It checks shapes in PyTorch, traces one attention calculation (how tokens compare with other tokens), and shows how a matrix rotates or stretches a grid. The outputs are tables and plots; no model is trained here.
+
 ## Problem
 The roadmap's goal for this step: *say the result shape of `(B,T,C) @ (C,H)` without running it.* In P1 and P4 most bugs are shape bugs, and every layer of a neural network (linear layer, attention, output logits) is a matrix multiplication. So I want to:
 1. understand what a dot product measures,

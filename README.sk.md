@@ -7,6 +7,13 @@ Lineárna algebra, ktorú transformer naozaj používa, overená v kóde: skalá
 
 ![Dávkové násobenie matíc](assets/batched_matmul.png)
 
+## Najprv jednoducho
+Model nevidí slová priamo. Každý token (slovo alebo jeho časť) reprezentuje zoznam čísel. **Tvar** hovorí, koľko takých zoznamov máme a aké sú dlhé. V tomto projekte `(4, 8, 32)` znamená 4 ukážky, po 8 tokenov a 32 čísel na token.
+
+Hlavná otázka znie: **ak tieto čísla vynásobím maticou `(32, 16)`, aký bude výsledok?** Odpoveď je `(4, 8, 16)`: stále 4 ukážky a 8 tokenov, ale každý token má už 16 čísel. Vnútorné čísla 32 sa musia zhodovať; práve preto mnohé programy spadnú na chybe tvarov.
+
+Skript najprv porovnáva smer dvojíc vektorov, potom napíše násobenie matíc v obyčajných cykloch a porovná ho s rýchlejším NumPy. Následne kontroluje tvary v PyTorchi, prejde jeden krok attention (ako tokeny porovnávajú ostatné tokeny) a na mriežke ukáže, ako matica otáča či naťahuje rovinu. Výsledky sú tabuľky a grafy; model sa tu netrénuje.
+
 ## Problém
 Cieľ tohto kroku podľa roadmapy: *povedať výsledný tvar `(B,T,C) @ (C,H)` bez spustenia.* V P1 a P4 je väčšina chýb v tvaroch a každá vrstva neurónovej siete (lineárna vrstva, attention, výstupné logity) je násobenie matíc. Chcem preto:
 1. rozumieť, čo meria skalárny súčin,
