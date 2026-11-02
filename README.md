@@ -1,6 +1,6 @@
 # 03 · Vectors, matrices & shapes
 
-🇸🇰 [Slovenská verzia](README.sk.md)
+🇸🇰 [Slovenská verzia](README.sk.md) · 📘 [Step-by-step tutorial](TUTORIAL.md)
 
 ## TL;DR
 The linear algebra a transformer actually uses, checked in code: dot product and cosine similarity, matrix multiplication written from scratch (matches NumPy to ~1e-14, but is up to **4,571× slower**), the shape rules up to **`(B,T,C) @ (C,H) → (B,T,H)`**, the shapes through one attention head, and 2×2 matrices as transformations of the plane.

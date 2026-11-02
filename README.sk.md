@@ -1,6 +1,6 @@
 # 03 · Vektory, matice a tvary
 
-🇬🇧 [English version](README.md)
+🇬🇧 [English version](README.md) · 📘 [Tutoriál krok za krokom](TUTORIAL.sk.md)
 
 ## TL;DR
 Lineárna algebra, ktorú transformer naozaj používa, overená v kóde: skalárny súčin a kosínusová podobnosť, násobenie matíc napísané od nuly (zhoduje sa s NumPy na ~1e-14, ale je až **4 571× pomalšie**), pravidlá tvarov až po **`(B,T,C) @ (C,H) → (B,T,H)`**, tvary v jednej attention hlave a matice 2×2 ako transformácie roviny.
